@@ -1,0 +1,62 @@
+import mrdata
+
+def main():
+    data = load_data("sub1.csv")
+    data = quick_sort(data, "trial", False)
+
+    for data_row in data:
+        print("Trial: " + str(data_row.trial) + ", Image: " + data_row.image_file + ", Time: " + str(data_row.time))
+
+def quick_sort(data_set, sort_after, rising):
+    
+
+    if len(data_set) <= 1:
+        return data_set
+    else:
+        pivot = data_set.pop()
+        if not hasattr(pivot, sort_after):
+            return "Nej!!"
+    
+
+    items_greater = []
+    items_lesser = []
+    
+    for data_row in data_set:
+        if rising:
+            if getattr(data_row, sort_after) > getattr(pivot, sort_after):
+                items_greater.append(data_row)
+            else:
+                items_lesser.append(data_row)
+        else: 
+            if getattr(data_row, sort_after) < getattr(pivot, sort_after):
+                items_greater.append(data_row)
+            else:
+                items_lesser.append(data_row)
+
+    return quick_sort(items_lesser, sort_after, rising) + [pivot] + quick_sort(items_greater, sort_after, rising)
+
+
+    
+
+
+   
+
+
+  
+
+def load_data(name):
+    data_set = []
+    file = open("/home/aleja767/csv/" + name, 'r')
+    data = file.read().splitlines()
+    file.close()
+
+    for i in data:
+        values = i.split(',')
+        data_row = mrdata.DataRow(int(values[0]), values[1], int(values[2]), values[3], values[4], int(values[5]))
+        data_set.append(data_row)
+
+    return data_set
+
+if __name__ == "__main__":
+    main()
+    
