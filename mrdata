@@ -1,0 +1,25 @@
+TP = 0
+TN = 1
+FP = 2
+FN = 3
+
+class DataRow:
+	def __init__(self, trial, image_file, time, correct_answer, subjects_answer, degrees_rotated):
+		self.trial = trial
+		self.image_file = image_file
+		self.time = time
+		self.correct_answer = correct_answer
+		self.subjects_answer = subjects_answer
+		self.degrees_rotated = degrees_rotated
+
+	def get_error_type(self):
+		if self.subjects_answer == "[n]" and self.correct_answer == "[n]":
+			return TP
+		elif self.subjects_answer == "[b]" and self.correct_answer == "[b]":
+			return TN
+		elif self.subjects_answer == "[n]" and self.correct_answer == "[b]":
+			return FP
+		elif self.subjects_answer == "[b]" and self.correct_answer == "[n]":
+			return FN
+		else:
+			return -1
