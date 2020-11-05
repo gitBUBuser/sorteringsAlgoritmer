@@ -1,0 +1,37 @@
+import mrdata
+
+def main():
+    data = load_data("sub1.csv")
+    data = bubble_sort(data, "trial")
+    for data_row in data:
+        print("Trial: " + str(data_row.trial) + ", Image: " + data_row.image_file + ", Time: " + str(data_row.time))
+
+def bubble_sort(data_set, sort_after):
+
+    if not hasattr(data_set, sort_after):
+        for i in range(len(data_set)-1,0,-1):
+            for j in range(i):
+                if getattr(data_set[j], sort_after) > getattr(data_set[j + 1], sort_after):
+                    temp = data_set[j]
+                    data_set[j] = data_set[j + 1]
+                    data_set[j + 1] = temp
+
+        return data_set
+
+    return "You are stupid!"
+
+def load_data(name):
+    data_set = []
+    file = open("/home/aleja767/csv/" + name, 'r')
+    data = file.read().splitlines()
+    file.close()
+
+    for i in data:
+        values = i.split(',')
+        data_row = mrdata.DataRow(int(values[0]), values[1], int(values[2]), values[3], values[4], int(values[5]))
+        data_set.append(data_row)
+
+    return data_set
+
+if __name__ == "__main__":
+    main()
